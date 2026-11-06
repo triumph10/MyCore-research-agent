@@ -1,27 +1,42 @@
-"""Searches the internet."""
 
-
-def search_internet(topic: str) -> list[str]:
-    return [f"Placeholder result for: {topic}"]
+import os
+from dotenv import load_dotenv
 from tavily import TavilyClient
 
-# Initialize search client
-tavily = TavilyClient()
+# Load environment variables from .env
+load_dotenv()
+
+# Get Tavily API key
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+
+if not TAVILY_API_KEY:
+    raise ValueError(
+        "TAVILY_API_KEY missing! Check your .env file."
+    )
+
+# Initialize Tavily client
+tavily = TavilyClient(api_key=TAVILY_API_KEY)
 
 
 def search_web(query):
-    response = tavily.search(
-        query=query,
-        max_results=5
-    )
+    try:
+        response = tavily.search(
+            query=query,
+            max_results=5,
+            search_depth="basic"
+        )
 
-    results = []
+        results = []
 
-    for item in response["results"]:
-        results.append({
-            "title": item.get("title", ""),
-            "url": item.get("url", ""),
-            "content": item.get("content", "")
-        })
+        for item in response.get("results", []):
+            results.append({
+                "title": item.get("title", ""),
+                "url": item.get("url", ""),
+                "content": item.get("content", "")
+            })
 
-    return results
+        return results
+
+    except Exception as error:
+        print(f"Tavily search error: {error}")
+        return []
