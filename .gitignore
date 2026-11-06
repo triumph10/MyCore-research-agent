@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Environment files (to keep credentials/secrets safe)
+.env
+.env.*
+
+# Virtual environment (as seen selected in your sidebar)
+venv/
+ENV/
+env/
+
+# Reports and generated data
+reports/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
