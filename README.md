@@ -1,8 +1,6 @@
 # MyCore Research Agent
 
-An automated AI-powered research assistant built in Python that takes any research topic, plans targeted web search queries, gathers up-to-date data using Tavily, and leverages Groq's high-performance LLM to generate a comprehensive, structured research report saved as a Markdown file.
-
----
+An automated AI-powered research assistant built with Python. It takes a research topic, creates targeted search queries, gathers up-to-date information using Tavily, and uses Groq to generate a structured research report saved as a Markdown file.
 
 ## Project Structure
 
@@ -14,50 +12,71 @@ triumph10-mycore-research-agent/
 ├── search_tool.py
 ├── report_generator.py
 ├── requirements.txt
+├── .env
 └── reports/
     └── .gitkeep
-Features
-Automated Research Planning: Dynamically generates strategic web search queries based on your input topic.
+```
 
-Web Search Integration: Connects with the Tavily API to fetch clean, relevant, and up-to-date web sources.
+## Features
 
-LLM-Powered Synthesis: Uses Groq to synthesize research data into an organized report complete with an executive summary, key findings, benefits, challenges, future opportunities, and source references.
+- **Automated Research Planning:** Generates targeted search queries based on the research topic.
+- **Web Search Integration:** Uses Tavily to gather relevant web sources.
+- **AI-Powered Reports:** Uses Groq to create structured reports with summaries, findings, opportunities, risks, and references.
+- **Markdown Export:** Automatically saves timestamped reports in the `reports/` directory.
 
-Automated Export: Timestamps and saves completed reports directly into the reports/ directory in Markdown format.
+## Prerequisites
 
-Prerequisites
-Python 3.8 or higher
+- Python 3.8 or higher
+- Groq API key
+- Tavily API key
 
-A Groq API Key (for LLM generation)
+## Installation & Setup
 
-A Tavily API Key (for web searching)
+**1. Clone the repository**
 
-Installation & Setup
-Clone or Download the Repository:
-
-Bash
-git clone [https://github.com/your-username/triumph10-mycore-research-agent.git](https://github.com/your-username/triumph10-mycore-research-agent.git)
+```bash
+git clone https://github.com/your-username/triumph10-mycore-research-agent.git
 cd triumph10-mycore-research-agent
-Populate requirements.txt:
-Ensure your requirements.txt file contains the necessary project dependencies:
+```
 
-Plaintext
+**2. Install dependencies**
+
+Make sure `requirements.txt` contains:
+
+```text
 groq
 tavily-python
 python-dotenv
-Install Dependencies:
-Run the following command in your terminal:
+```
 
-Bash
+Install them:
+
+```bash
 pip install -r requirements.txt
-Configure Environment Variables:
-Create a .env file in the root directory of your project and add your API keys:
+```
 
-Code snippet
-GROQ_API_KEY=your_groq_api_key_here
-TAVILY_API_KEY=your_tavily_api_key_here
-Usage
-Run the main script to start the agent:
+**3. Configure environment variables**
 
-Bash
-python main.p
+Create a `.env` file in the project root:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+TAVILY_API_KEY=your_tavily_api_key
+GROQ_MODEL=openai/gpt-oss-120b
+```
+
+Never upload your `.env` file or share your API keys publicly.
+
+## Usage
+
+Run the research agent:
+
+```bash
+python main.py
+```
+
+Enter your research topic when prompted. ResearchMate AI will gather sources, generate a report, and save it in the `reports/` directory.
+
+## Output
+
+Reports are saved as timestamped Markdown files
