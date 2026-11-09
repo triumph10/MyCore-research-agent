@@ -3,40 +3,38 @@ import os
 from dotenv import load_dotenv
 from tavily import TavilyClient
 
-# Load environment variables from .env
 load_dotenv()
 
-# Get Tavily API key
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+api_key = os.getenv("TAVILY_API_KEY")
 
-if not TAVILY_API_KEY:
-    raise ValueError(
-        "TAVILY_API_KEY missing! Check your .env file."
-    )
+if not api_key:
+    raise ValueError("TAVILY_API_KEY missing from .env")
 
-# Initialize Tavily client
-tavily = TavilyClient(api_key=TAVILY_API_KEY)
+tavily = TavilyClient(api_key=api_key)
 
 
 def search_web(query):
-    try:
-        response = tavily.search(
-            query=query,
-            max_results=5,
-            search_depth="basic"
-        )
+    response = tavily.search(
+        query=query,
+        search_depth="basic",
+        max_results=3,
+        include_raw_content="markdown"
+    )
 
-        results = []
+    results = []
 
-        for item in response.get("results", []):
-            results.append({
-                "title": item.get("title", ""),
-                "url": item.get("url", ""),
-                "content": item.get("content", "")
-            })
+    for item in response.get("results", []):
+        results.append({
+            "title": item.get("title", ""),
+            "url": item.get("url", ""),
+            "content": item.get("content", ""),
+            "raw_content": item.get("raw_content", ""),
+            "published_date": (
+                item.get("published_date")
+                or item.get("publishedDate")
+                or "Date not provided"
+            ),
+            "score": item.get("score", 0)
+        })
 
-        return results
-
-    except Exception as error:
-        print(f"Tavily search error: {error}")
-        return []
+    return results
